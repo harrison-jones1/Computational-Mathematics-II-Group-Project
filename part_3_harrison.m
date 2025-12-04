@@ -23,7 +23,8 @@ function magnetisations = ising_model_magnetisations(number_of_iterations, numbe
 		proposal_flip = randi(number_of_spins);
 		proposal_spins = spins;
 		proposal_spins(proposal_flip) = proposal_spins(proposal_flip) * -1;
-		acceptance_probability = f(proposal_spins) / f(spins);
+		acceptance_probability = exp(-(energy(proposal_spins) - energy(spins))/temperature);
+		%acceptance_probability = f(proposal_spins) / f(spins);
 		if rand < acceptance_probability
 			spins = proposal_spins;
 			magnetisations(i) = magnetisation(spins);
@@ -39,7 +40,7 @@ close all;
 n = 10000000;
 
 % Number of spins
-N = 100;
+N = 1000;
 
 % Temperatures
 temperatures = [1, 2, 5, 20];
@@ -67,10 +68,11 @@ for i = 1:length(temperatures)
 	histogram(magnetisations(:, i), bins);
 	hold on;
 	%title("T = " + temperatures(i));
-	xlim([-1, 1]);
+	%xlim([-1, 1]);
 	%ylim([0, 2.5*10^6]);
 end
 
-legend("T = 1", "T = 2", "T = 5", "T = 20");
+legend("T = 1", "T = 2", "T = 5", "T = 20", "interpreter", "latex");
+fontsize(20, "points");
 
 exportgraphics(gcf, "part_3.pdf");
