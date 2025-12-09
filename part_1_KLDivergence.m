@@ -42,5 +42,9 @@ end
 hold on
 xscale log
 grid on
+fontsize(scale=2.5);
 scatter(x_values, y_values, "filled", 'MarkerEdgeColor', [0 .5 .5], 'MarkerFaceColor',[0 .7 .7], 'LineWidth', 1.5)
+title('KL Divergence of Metropolis-Hastings')
+xlabel('Number of Samples') 
+ylabel('Divergence') 
 legend("KL Divergence");
